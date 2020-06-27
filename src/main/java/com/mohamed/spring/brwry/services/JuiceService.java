@@ -6,4 +6,10 @@ import java.util.UUID;
 
 public interface JuiceService {
     JuiceDTO getJuiceById(UUID juiceId);
+
+    JuiceDTO saveJuice(JuiceDTO juiceToSave);
+
+    void updateJuice(UUID juiceId, JuiceDTO juiceDTO);
+
+    void deleteById(UUID juiceId);
 }
