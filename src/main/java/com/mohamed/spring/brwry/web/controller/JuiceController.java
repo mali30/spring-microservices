@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Slf4j
@@ -29,7 +30,7 @@ public class JuiceController {
     }
 
     @PostMapping
-    public ResponseEntity postJuice(@RequestBody JuiceDTO juiceDTO){
+    public ResponseEntity postJuice(@Valid @RequestBody JuiceDTO juiceDTO){
         JuiceDTO createdJuice = juiceService.saveJuice(juiceDTO);
 
         // return to client the location it was created
@@ -40,7 +41,7 @@ public class JuiceController {
     }
 
     @PutMapping("/{juiceId}")
-    public ResponseEntity updateJuice(@PathVariable("juiceId") UUID juiceId,  @RequestBody JuiceDTO juiceDTO){
+    public ResponseEntity updateJuice(@PathVariable("juiceId") UUID juiceId, @Valid @RequestBody JuiceDTO juiceDTO){
         juiceService.updateJuice(juiceId , juiceDTO);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
 
