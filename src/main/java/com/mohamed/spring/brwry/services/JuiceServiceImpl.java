@@ -29,11 +29,14 @@ public class JuiceServiceImpl implements JuiceService {
 
     @Override
     public void updateJuice(UUID juiceId, JuiceDTO juiceDTO) {
-
+        JuiceDTO.builder().juiceName(juiceDTO.getJuiceName())
+                .juiceStyle(juiceDTO.getJuiceStyle())
+                .build();
     }
 
     @Override
     public void deleteById(UUID juiceId) {
+        JuiceDTO.builder().uuid(juiceId);
 
     }
 }
