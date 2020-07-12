@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/customer")
@@ -21,7 +25,7 @@ public class CustomerController {
 
 
     @PostMapping
-    public ResponseEntity createCustomer(@RequestBody CustomerDTO customerToCreate){
+    public ResponseEntity createCustomer(@Valid @RequestBody CustomerDTO customerToCreate){
         CustomerDTO customer = customerService.createCustomer(customerToCreate);
         return new ResponseEntity(customer , HttpStatus.CREATED);
     }
@@ -33,7 +37,7 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void customerToUpdate(@PathVariable("customerId") UUID uuid , @RequestBody CustomerDTO customerUpdate){
+    public void customerToUpdate(@PathVariable("customerId") UUID uuid , @Valid @RequestBody CustomerDTO customerUpdate){
         customerService.updatedCustomer(customerUpdate);
 
     }
@@ -45,4 +49,22 @@ public class CustomerController {
     }
 
 
+    /**
+     * Exception Handling
+     * Now that we are using controller advice, we don't need this duplicate
+     * cdoe here. instead it's handled at the top level
+     */
+
+//    @ExceptionHandler(ConstraintViolationException.class)
+//    public ResponseEntity<List> exceptionHandling(ConstraintViolationException e) {
+//        List<String> exceptions = new ArrayList<>(e.getConstraintViolations().size());
+//
+//        e.getConstraintViolations().forEach(
+//                violation ->{
+//                    exceptions.add(e.getConstraintViolations() + ":" + e.getMessage());
+//                }
+//        );
+//
+//        return new ResponseEntity<>(exceptions , HttpStatus.BAD_REQUEST);
+//    }
 }
